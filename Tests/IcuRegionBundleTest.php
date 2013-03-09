@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Icu\Tests\ResourceBundle\Icu;
+namespace Symfony\Component\Icu\Tests;
 
-use Symfony\Component\Icu\ResourceBundle\Icu\IcuRegionBundle;
+use Symfony\Component\Icu\IcuRegionBundle;
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
@@ -32,7 +32,7 @@ class IcuRegionBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->reader = $this->getMock('Symfony\Component\Icu\ResourceBundle\Reader\ResourceEntryReaderInterface');
+        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface');
         $this->bundle = new IcuRegionBundle(self::RES_DIR, $this->reader);
     }
 

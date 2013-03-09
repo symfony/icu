@@ -9,23 +9,26 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Icu\ResourceBundle\Icu;
+namespace Symfony\Component\Icu;
 
-use Symfony\Component\Icu\Icu;
-use Symfony\Component\Icu\ResourceBundle\AbstractResourceBundle;
-use Symfony\Component\Icu\ResourceBundle\RegionBundle;
-use Symfony\Component\Icu\ResourceBundle\RegionBundleInterface;
+use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
+use Symfony\Component\Intl\ResourceBundle\RegionBundle;
 
 /**
- * An ICU-specific implementation of {@link \Symfony\Component\Icu\ResourceBundle\RegionBundleInterface}.
+ * An ICU-specific implementation of {@link \Symfony\Component\Intl\ResourceBundle\RegionBundleInterface}.
  *
  * This class normalizes the data of the ICU .res files to satisfy the contract
- * defined in {@link \Symfony\Component\Icu\ResourceBundle\RegionBundleInterface}.
+ * defined in {@link \Symfony\Component\Intl\ResourceBundle\RegionBundleInterface}.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class IcuRegionBundle extends RegionBundle
 {
+    public function __construct(ResourceEntryReaderInterface $entryReader)
+    {
+        parent::__construct(realpath(IcuData::getResourceDirectory() . '/region'), $entryReader);
+    }
+
     /**
      * {@inheritdoc}
      */

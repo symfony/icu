@@ -9,23 +9,26 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Icu\ResourceBundle\Icu;
+namespace Symfony\Component\Icu;
 
-use Symfony\Component\Icu\Icu;
-use Symfony\Component\Icu\ResourceBundle\AbstractResourceBundle;
-use Symfony\Component\Icu\ResourceBundle\LanguageBundle;
-use Symfony\Component\Icu\ResourceBundle\LanguageBundleInterface;
+use Symfony\Component\Intl\ResourceBundle\LanguageBundle;
+use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
 
 /**
- * An ICU-specific implementation of {@link \Symfony\Component\Icu\ResourceBundle\LanguageBundleInterface}.
+ * An ICU-specific implementation of {@link \Symfony\Component\Intl\ResourceBundle\LanguageBundleInterface}.
  *
  * This class normalizes the data of the ICU .res files to satisfy the contract
- * defined in {@link \Symfony\Component\Icu\ResourceBundle\LanguageBundleInterface}.
+ * defined in {@link \Symfony\Component\Intl\ResourceBundle\LanguageBundleInterface}.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class IcuLanguageBundle extends LanguageBundle
 {
+    public function __construct(ResourceEntryReaderInterface $entryReader)
+    {
+        parent::__construct(realpath(IcuData::getResourceDirectory() . '/lang'), $entryReader);
+    }
+
     /**
      * {@inheritdoc}
      */

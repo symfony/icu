@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\Icu\Tests\ResourceBundle\Icu;
+namespace Symfony\Component\Icu\Tests;
 
-use Symfony\Component\Icu\ResourceBundle\Icu\IcuLanguageBundle;
+use Symfony\Component\Icu\IcuLanguageBundle;
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
@@ -32,7 +32,7 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->reader = $this->getMock('Symfony\Component\Icu\ResourceBundle\Reader\ResourceEntryReaderInterface');
+        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface');
         $this->bundle = new IcuLanguageBundle(self::RES_DIR, $this->reader);
     }
 

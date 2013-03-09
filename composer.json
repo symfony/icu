@@ -1,8 +1,8 @@
 {
     "name": "symfony/icu",
     "type": "library",
-    "description": "Gives access to the L10N data of the ICU library. Includes a stub layer for when PHP's intl extension is not available.",
-    "keywords": ["icu", "internationalization", "localization", "i18n", "l10n"],
+    "description": "Contains an excerpt of the ICU data and classes to load it.",
+    "keywords": ["icu", "intl"],
     "homepage": "http://symfony.com",
     "license": "MIT",
     "authors": [
@@ -16,17 +16,14 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "symfony/intl": ">=2.3"
     },
     "require-dev": {
-        "symfony/filesystem": ">=2.1",
         "lib-ICU": "~4.8.0"
     },
     "conflict": {
         "lib-ICU": "<4.8,>=49"
-    },
-    "suggest": {
-        "ext-intl": "to use other locales than `en`"
     },
     "autoload": {
         "psr-0": { "Symfony\\Component\\Icu\\": "" }
