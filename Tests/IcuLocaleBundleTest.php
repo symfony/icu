@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Icu\Tests;
 
+use Symfony\Component\Icu\IcuData;
 use Symfony\Component\Icu\IcuLocaleBundle;
 
 /**
@@ -18,7 +19,10 @@ use Symfony\Component\Icu\IcuLocaleBundle;
  */
 class IcuLocaleBundleTest extends \PHPUnit_Framework_TestCase
 {
-    const RES_DIR = '/base/locales';
+    /**
+     * @var string
+     */
+    private $resDir;
 
     /**
      * @var IcuLocaleBundle
@@ -32,8 +36,9 @@ class IcuLocaleBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface');
-        $this->bundle = new IcuLocaleBundle(self::RES_DIR, $this->reader);
+        $this->resDir = IcuData::getResourceDirectory() . '/locales';
+        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
+        $this->bundle = new IcuLocaleBundle($this->reader);
     }
 
     public function testGetLocaleNames()
@@ -45,8 +50,8 @@ class IcuLocaleBundleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->reader->expects($this->once())
-            ->method('readMergedEntry')
-            ->with(self::RES_DIR, 'en', array('Locales'))
+            ->method('readEntry')
+            ->with($this->resDir, 'en', array('Locales'))
             ->will($this->returnValue($locales));
 
         $sortedLocales = array(

@@ -12,7 +12,7 @@
 namespace Symfony\Component\Icu;
 
 use Symfony\Component\Intl\ResourceBundle\LanguageBundle;
-use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
+use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface;
 
 /**
  * An ICU-specific implementation of {@link \Symfony\Component\Intl\ResourceBundle\LanguageBundleInterface}.
@@ -24,9 +24,9 @@ use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
  */
 class IcuLanguageBundle extends LanguageBundle
 {
-    public function __construct(ResourceEntryReaderInterface $entryReader)
+    public function __construct(StructuredBundleReaderInterface $reader)
     {
-        parent::__construct(realpath(IcuData::getResourceDirectory() . '/lang'), $entryReader);
+        parent::__construct(realpath(IcuData::getResourceDirectory() . '/lang'), $reader);
     }
 
     /**
@@ -38,15 +38,7 @@ class IcuLanguageBundle extends LanguageBundle
             return null;
         }
 
-        $languages = $this->readEntry($locale, 'Languages');
-
-        // Some languages are translated together with their region,
-        // i.e. "en_GB" is translated as "British English"
-        if (null !== $region && isset($languages[$lang.'_'.$region])) {
-            return $languages[$lang.'_'.$region];
-        }
-
-        return $languages[$lang];
+        return parent::getLanguageName($locale, $lang, $region);
     }
 
     /**
@@ -54,7 +46,7 @@ class IcuLanguageBundle extends LanguageBundle
      */
     public function getLanguageNames($locale)
     {
-        $languages = $this->readMergedEntry($locale, 'Languages');
+        $languages = parent::getLanguageNames($locale);
 
         $collator = new \Collator($locale);
         $collator->asort($languages);

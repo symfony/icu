@@ -12,7 +12,7 @@
 namespace Symfony\Component\Icu;
 
 use Symfony\Component\Intl\ResourceBundle\LocaleBundle;
-use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
+use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface;
 
 /**
  * An ICU-specific implementation of {@link \Symfony\Component\Intl\ResourceBundle\LocaleBundleInterface}.
@@ -24,9 +24,9 @@ use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
  */
 class IcuLocaleBundle extends LocaleBundle
 {
-    public function __construct(ResourceEntryReaderInterface $entryReader)
+    public function __construct(StructuredBundleReaderInterface $reader)
     {
-        parent::__construct(realpath(IcuData::getResourceDirectory() . '/locales'), $entryReader);
+        parent::__construct(realpath(IcuData::getResourceDirectory() . '/locales'), $reader);
     }
 
     /**

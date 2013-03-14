@@ -12,13 +12,17 @@
 namespace Symfony\Component\Icu\Tests;
 
 use Symfony\Component\Icu\IcuCurrencyBundle;
+use Symfony\Component\Icu\IcuData;
 
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 {
-    const RES_DIR = '/base/curr';
+    /**
+     * @var string
+     */
+    private $resDir;
 
     /**
      * @var IcuCurrencyBundle
@@ -32,15 +36,16 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface');
-        $this->bundle = new IcuCurrencyBundle(self::RES_DIR, $this->reader);
+        $this->resDir = IcuData::getResourceDirectory() . '/curr';
+        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
+        $this->bundle = new IcuCurrencyBundle($this->reader);
     }
 
     public function testGetCurrencySymbol()
     {
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'en', array('Currencies', 'EUR', 0))
+            ->with($this->resDir, 'en', array('Currencies', 'EUR', 0))
             ->will($this->returnValue('€'));
 
         $this->assertSame('€', $this->bundle->getCurrencySymbol('en', 'EUR'));
@@ -50,7 +55,7 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
     {
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'en', array('Currencies', 'EUR', 1))
+            ->with($this->resDir, 'en', array('Currencies', 'EUR', 1))
             ->will($this->returnValue('Euro'));
 
         $this->assertSame('Euro', $this->bundle->getCurrencyName('en', 'EUR'));
@@ -64,8 +69,8 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->reader->expects($this->once())
-            ->method('readMergedEntry')
-            ->with(self::RES_DIR, 'en', array('Currencies'))
+            ->method('readEntry')
+            ->with($this->resDir, 'en', array('Currencies'))
             ->will($this->returnValue($currencies));
 
         $sortedCurrencies = array(
@@ -85,7 +90,7 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'supplementaldata', array('CurrencyMeta'))
+            ->with($this->resDir, 'supplementaldata', array('CurrencyMeta'))
             ->will($this->returnValue($currencyData));
 
         $this->assertSame(123, $this->bundle->getFractionDigits('EUR'));
@@ -100,7 +105,7 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'supplementaldata', array('CurrencyMeta'))
+            ->with($this->resDir, 'supplementaldata', array('CurrencyMeta'))
             ->will($this->returnValue($currencyData));
 
         $this->assertSame(123, $this->bundle->getFractionDigits('EUR'));
@@ -115,7 +120,7 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'supplementaldata', array('CurrencyMeta'))
+            ->with($this->resDir, 'supplementaldata', array('CurrencyMeta'))
             ->will($this->returnValue($currencyData));
 
         $this->assertSame(123, $this->bundle->getRoundingIncrement('EUR'));
@@ -130,7 +135,7 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'supplementaldata', array('CurrencyMeta'))
+            ->with($this->resDir, 'supplementaldata', array('CurrencyMeta'))
             ->will($this->returnValue($currencyData));
 
         $this->assertSame(123, $this->bundle->getRoundingIncrement('EUR'));

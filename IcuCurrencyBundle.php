@@ -12,7 +12,7 @@
 namespace Symfony\Component\Icu;
 
 use Symfony\Component\Intl\ResourceBundle\CurrencyBundle;
-use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
+use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface;
 
 /**
  * An ICU-specific implementation of {@link \Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface}.
@@ -32,9 +32,9 @@ class IcuCurrencyBundle extends CurrencyBundle
 
     const INDEX_ROUNDING_INCREMENT = 1;
 
-    public function __construct(ResourceEntryReaderInterface $entryReader)
+    public function __construct(StructuredBundleReaderInterface $reader)
     {
-        parent::__construct(realpath(IcuData::getResourceDirectory() . '/curr'), $entryReader);
+        parent::__construct(realpath(IcuData::getResourceDirectory() . '/curr'), $reader);
     }
 
     /**
@@ -55,7 +55,7 @@ class IcuCurrencyBundle extends CurrencyBundle
      */
     public function getFractionDigits($currency)
     {
-        $entry = $this->readEntry('supplementaldata', 'CurrencyMeta');
+        $entry = $this->readEntry('supplementaldata', array('CurrencyMeta'));
 
         if (!isset($entry[$currency][self::INDEX_FRACTION_DIGITS])) {
             // The 'DEFAULT' key contains the fraction digits and the rounding
@@ -73,7 +73,7 @@ class IcuCurrencyBundle extends CurrencyBundle
      */
     public function getRoundingIncrement($currency)
     {
-        $entry = $this->readEntry('supplementaldata', 'CurrencyMeta');
+        $entry = $this->readEntry('supplementaldata', array('CurrencyMeta'));
 
         if (!isset($entry[$currency][self::INDEX_ROUNDING_INCREMENT])) {
             // The 'DEFAULT' key contains the fraction digits and the rounding

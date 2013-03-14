@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Icu\Tests;
 
+use Symfony\Component\Icu\IcuData;
 use Symfony\Component\Icu\IcuRegionBundle;
 
 /**
@@ -18,7 +19,10 @@ use Symfony\Component\Icu\IcuRegionBundle;
  */
 class IcuRegionBundleTest extends \PHPUnit_Framework_TestCase
 {
-    const RES_DIR = '/base/region';
+    /**
+     * @var string
+     */
+    private $resDir;
 
     /**
      * @var IcuRegionBundle
@@ -32,8 +36,9 @@ class IcuRegionBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface');
-        $this->bundle = new IcuRegionBundle(self::RES_DIR, $this->reader);
+        $this->resDir = IcuData::getResourceDirectory() . '/region';
+        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
+        $this->bundle = new IcuRegionBundle($this->reader);
     }
 
     public function testGetCountryNameOfUnknownCountry()
@@ -71,8 +76,8 @@ class IcuRegionBundleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->reader->expects($this->once())
-            ->method('readMergedEntry')
-            ->with(self::RES_DIR, 'en', array('Countries'))
+            ->method('readEntry')
+            ->with($this->resDir, 'en', array('Countries'))
             ->will($this->returnValue($countries));
 
         $sortedCountries = array(

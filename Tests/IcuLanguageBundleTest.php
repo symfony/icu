@@ -11,6 +11,7 @@
 
 namespace Symfony\Component\Icu\Tests;
 
+use Symfony\Component\Icu\IcuData;
 use Symfony\Component\Icu\IcuLanguageBundle;
 
 /**
@@ -18,7 +19,10 @@ use Symfony\Component\Icu\IcuLanguageBundle;
  */
 class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 {
-    const RES_DIR = '/base/lang';
+    /**
+     * @var string
+     */
+    private $resDir;
 
     /**
      * @var IcuLanguageBundle
@@ -32,8 +36,9 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface');
-        $this->bundle = new IcuLanguageBundle(self::RES_DIR, $this->reader);
+        $this->resDir = IcuData::getResourceDirectory() . '/lang';
+        $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
+        $this->bundle = new IcuLanguageBundle($this->reader);
     }
 
     public function testGetLanguageName()
@@ -45,7 +50,7 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'en', array('Languages'))
+            ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
         $this->assertSame('German', $this->bundle->getLanguageName('en', 'de'));
@@ -61,7 +66,7 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'en', array('Languages'))
+            ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
         $this->assertSame('British English', $this->bundle->getLanguageName('en', 'en', 'GB'));
@@ -76,7 +81,7 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 
         $this->reader->expects($this->once())
             ->method('readEntry')
-            ->with(self::RES_DIR, 'en', array('Languages'))
+            ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
         $this->assertSame('English', $this->bundle->getLanguageName('en', 'en', 'US'));
@@ -99,8 +104,8 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->reader->expects($this->once())
-            ->method('readMergedEntry')
-            ->with(self::RES_DIR, 'en', array('Languages'))
+            ->method('readEntry')
+            ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
         $sortedLanguages = array(
@@ -119,8 +124,8 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->reader->expects($this->once())
-            ->method('readMergedEntry')
-            ->with(self::RES_DIR, 'en', array('Scripts'))
+            ->method('readEntry')
+            ->with($this->resDir, 'en', array('Scripts'))
             ->will($this->returnValue($scripts));
 
         $sortedScripts = array(

@@ -11,7 +11,7 @@
 
 namespace Symfony\Component\Icu;
 
-use Symfony\Component\Intl\ResourceBundle\Reader\ResourceEntryReaderInterface;
+use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface;
 use Symfony\Component\Intl\ResourceBundle\RegionBundle;
 
 /**
@@ -24,9 +24,9 @@ use Symfony\Component\Intl\ResourceBundle\RegionBundle;
  */
 class IcuRegionBundle extends RegionBundle
 {
-    public function __construct(ResourceEntryReaderInterface $entryReader)
+    public function __construct(StructuredBundleReaderInterface $reader)
     {
-        parent::__construct(realpath(IcuData::getResourceDirectory() . '/region'), $entryReader);
+        parent::__construct(realpath(IcuData::getResourceDirectory() . '/region'), $reader);
     }
 
     /**
