@@ -29,10 +29,5 @@
         "psr-0": { "Symfony\\Component\\Icu\\": "" }
     },
     "target-dir": "Symfony/Component/Icu",
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-48-master": "1.48-dev"
-        }
-    }
+    "minimum-stability": "dev"
 }
