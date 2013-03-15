@@ -17,7 +17,7 @@ use Symfony\Component\Icu\IcuLocaleBundle;
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class IcuLocaleBundleTest extends \PHPUnit_Framework_TestCase
+class IcuLocaleBundleTest extends IcuTestCase
 {
     /**
      * @var string
@@ -36,6 +36,8 @@ class IcuLocaleBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        parent::setUp();
+
         $this->resDir = IcuData::getResourceDirectory() . '/locales';
         $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
         $this->bundle = new IcuLocaleBundle($this->reader);

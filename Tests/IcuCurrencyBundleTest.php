@@ -17,7 +17,7 @@ use Symfony\Component\Icu\IcuData;
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
+class IcuCurrencyBundleTest extends IcuTestCase
 {
     /**
      * @var string
@@ -36,6 +36,8 @@ class IcuCurrencyBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        parent::setUp();
+
         $this->resDir = IcuData::getResourceDirectory() . '/curr';
         $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
         $this->bundle = new IcuCurrencyBundle($this->reader);

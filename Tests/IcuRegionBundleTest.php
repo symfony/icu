@@ -17,7 +17,7 @@ use Symfony\Component\Icu\IcuRegionBundle;
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class IcuRegionBundleTest extends \PHPUnit_Framework_TestCase
+class IcuRegionBundleTest extends IcuTestCase
 {
     /**
      * @var string
@@ -36,6 +36,8 @@ class IcuRegionBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        parent::setUp();
+
         $this->resDir = IcuData::getResourceDirectory() . '/region';
         $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
         $this->bundle = new IcuRegionBundle($this->reader);

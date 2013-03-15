@@ -17,7 +17,7 @@ use Symfony\Component\Icu\IcuLanguageBundle;
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
+class IcuLanguageBundleTest extends IcuTestCase
 {
     /**
      * @var string
@@ -36,6 +36,8 @@ class IcuLanguageBundleTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
+        parent::setUp();
+
         $this->resDir = IcuData::getResourceDirectory() . '/lang';
         $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
         $this->bundle = new IcuLanguageBundle($this->reader);
