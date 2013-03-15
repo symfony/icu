@@ -32,20 +32,24 @@ class IcuLanguageBundle extends LanguageBundle
     /**
      * {@inheritdoc}
      */
-    public function getLanguageName($locale, $lang, $region = null)
+    public function getLanguageName($lang, $region = null, $locale = null)
     {
         if ('mul' === $lang) {
             return null;
         }
 
-        return parent::getLanguageName($locale, $lang, $region);
+        return parent::getLanguageName($lang, $region, $locale);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getLanguageNames($locale)
+    public function getLanguageNames($locale = null)
     {
+        if (null === $locale) {
+            $locale = \Locale::getDefault();
+        }
+
         $languages = parent::getLanguageNames($locale);
 
         $collator = new \Collator($locale);
@@ -60,8 +64,12 @@ class IcuLanguageBundle extends LanguageBundle
     /**
      * {@inheritdoc}
      */
-    public function getScriptNames($locale)
+    public function getScriptNames($locale = null)
     {
+        if (null === $locale) {
+            $locale = \Locale::getDefault();
+        }
+
         $scripts = parent::getScriptNames($locale);
 
         $collator = new \Collator($locale);

@@ -32,8 +32,12 @@ class IcuLocaleBundle extends LocaleBundle
     /**
      * {@inheritdoc}
      */
-    public function getLocaleNames($locale)
+    public function getLocaleNames($locale = null)
     {
+        if (null === $locale) {
+            $locale = \Locale::getDefault();
+        }
+
         $locales = parent::getLocaleNames($locale);
 
         $collator = new \Collator($locale);

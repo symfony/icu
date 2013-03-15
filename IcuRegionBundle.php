@@ -32,20 +32,24 @@ class IcuRegionBundle extends RegionBundle
     /**
      * {@inheritdoc}
      */
-    public function getCountryName($locale, $country)
+    public function getCountryName($country, $locale = null)
     {
         if ('ZZ' === $country || ctype_digit((string) $country)) {
             return null;
         }
 
-        return parent::getCountryName($locale, $country);
+        return parent::getCountryName($country, $locale);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getCountryNames($locale)
+    public function getCountryNames($locale = null)
     {
+        if (null === $locale) {
+            $locale = \Locale::getDefault();
+        }
+
         $countries = parent::getCountryNames($locale);
 
         // "ZZ" is the code for unknown country

@@ -48,7 +48,7 @@ class IcuRegionBundleTest extends IcuTestCase
         $this->reader->expects($this->never())
             ->method('readEntry');
 
-        $this->assertNull($this->bundle->getCountryName('en', 'ZZ'));
+        $this->assertNull($this->bundle->getCountryName('ZZ', 'en'));
     }
 
     public function testGetCountryNameOfNumericalRegion()
@@ -56,7 +56,7 @@ class IcuRegionBundleTest extends IcuTestCase
         $this->reader->expects($this->never())
             ->method('readEntry');
 
-        $this->assertNull($this->bundle->getCountryName('en', 123));
+        $this->assertNull($this->bundle->getCountryName(123, 'en'));
     }
 
     public function testGetCountryNameOfNumericalRegionWithLeadingZero()
@@ -64,7 +64,7 @@ class IcuRegionBundleTest extends IcuTestCase
         $this->reader->expects($this->never())
             ->method('readEntry');
 
-        $this->assertNull($this->bundle->getCountryName('en', '010'));
+        $this->assertNull($this->bundle->getCountryName('010', 'en'));
     }
 
     public function testGetCountryNames()

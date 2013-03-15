@@ -41,6 +41,10 @@ class IcuLanguageBundleTest extends IcuTestCase
         $this->resDir = IcuData::getResourceDirectory() . '/lang';
         $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
         $this->bundle = new IcuLanguageBundle($this->reader);
+
+        $bundle = new \Symfony\Component\Icu\IcuCurrencyBundle(new \Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReader(new \Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader()));
+        var_dump($bundle->getCurrencyNames('de'));
+        die;
     }
 
     public function testGetLanguageName()
@@ -55,7 +59,7 @@ class IcuLanguageBundleTest extends IcuTestCase
             ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
-        $this->assertSame('German', $this->bundle->getLanguageName('en', 'de'));
+        $this->assertSame('German', $this->bundle->getLanguageName('de', 'en'));
     }
 
     public function testGetLanguageNameWithRegion()
@@ -71,7 +75,7 @@ class IcuLanguageBundleTest extends IcuTestCase
             ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
-        $this->assertSame('British English', $this->bundle->getLanguageName('en', 'en', 'GB'));
+        $this->assertSame('British English', $this->bundle->getLanguageName('en', 'GB', 'en'));
     }
 
     public function testGetLanguageNameWithUntranslatedRegion()
@@ -86,7 +90,7 @@ class IcuLanguageBundleTest extends IcuTestCase
             ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
-        $this->assertSame('English', $this->bundle->getLanguageName('en', 'en', 'US'));
+        $this->assertSame('English', $this->bundle->getLanguageName('en', 'US', 'en'));
     }
 
     public function testGetLanguageNameForMultipleLanguages()
@@ -94,7 +98,7 @@ class IcuLanguageBundleTest extends IcuTestCase
         $this->reader->expects($this->never())
             ->method('readEntry');
 
-        $this->assertNull($this->bundle->getLanguageName('en', 'mul'));
+        $this->assertNull($this->bundle->getLanguageName('mul', 'en'));
     }
 
     public function testGetLanguageNames()

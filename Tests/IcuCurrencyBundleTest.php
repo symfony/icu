@@ -50,7 +50,7 @@ class IcuCurrencyBundleTest extends IcuTestCase
             ->with($this->resDir, 'en', array('Currencies', 'EUR', 0))
             ->will($this->returnValue('€'));
 
-        $this->assertSame('€', $this->bundle->getCurrencySymbol('en', 'EUR'));
+        $this->assertSame('€', $this->bundle->getCurrencySymbol('EUR', 'en'));
     }
 
     public function testGetCurrencyName()
@@ -60,7 +60,7 @@ class IcuCurrencyBundleTest extends IcuTestCase
             ->with($this->resDir, 'en', array('Currencies', 'EUR', 1))
             ->will($this->returnValue('Euro'));
 
-        $this->assertSame('Euro', $this->bundle->getCurrencyName('en', 'EUR'));
+        $this->assertSame('Euro', $this->bundle->getCurrencyName('EUR', 'en'));
     }
 
     public function testGetCurrencyNames()

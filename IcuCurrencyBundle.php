@@ -40,8 +40,12 @@ class IcuCurrencyBundle extends CurrencyBundle
     /**
      * {@inheritdoc}
      */
-    public function getCurrencyNames($locale)
+    public function getCurrencyNames($locale = null)
     {
+        if (null === $locale) {
+            $locale = \Locale::getDefault();
+        }
+
         $names = parent::getCurrencyNames($locale);
 
         $collator = new \Collator($locale);
