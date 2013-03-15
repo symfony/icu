@@ -20,10 +20,10 @@
         "symfony/intl": ">=2.3"
     },
     "require-dev": {
-        "lib-ICU": "~4.8.0"
+        "lib-ICU": "~50.0"
     },
     "conflict": {
-        "lib-ICU": "<4.8,>=49"
+        "lib-ICU": "<50,>=51"
     },
     "autoload": {
         "psr-0": { "Symfony\\Component\\Icu\\": "" }
