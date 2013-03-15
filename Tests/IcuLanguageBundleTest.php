@@ -41,10 +41,6 @@ class IcuLanguageBundleTest extends IcuTestCase
         $this->resDir = IcuData::getResourceDirectory() . '/lang';
         $this->reader = $this->getMock('Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface');
         $this->bundle = new IcuLanguageBundle($this->reader);
-
-        $bundle = new \Symfony\Component\Icu\IcuCurrencyBundle(new \Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReader(new \Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader()));
-        var_dump($bundle->getCurrencyNames('de'));
-        die;
     }
 
     public function testGetLanguageName()
