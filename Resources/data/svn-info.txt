@@ -1,7 +1,7 @@
 SVN information
 ===============
 
-URL: http://source.icu-project.org/repos/icu/icu/tags/release-4-8-1-1/source
-Revision: 30847
-Author: yoshito
-Date: 2011-10-18T23:04:51.153627Z
+URL: http://source.icu-project.org/repos/icu/icu/tags/release-4-2-1/source
+Revision: 26215
+Author: mow
+Date: 2009-07-01T18:39:20.238426Z
