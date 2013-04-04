@@ -33,7 +33,7 @@ class IcuData
      */
     public static function isLoadable()
     {
-        return class_exists('\ResourceBundle');
+        return false;
     }
 
     /**
