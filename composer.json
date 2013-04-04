@@ -17,13 +17,8 @@
     ],
     "require": {
         "php": ">=5.3.3",
+        "lib-ICU": "~50.0",
         "symfony/intl": ">=2.3"
-    },
-    "require-dev": {
-        "lib-ICU": "~50.0"
-    },
-    "conflict": {
-        "lib-ICU": "<50,>=51"
     },
     "autoload": {
         "psr-0": { "Symfony\\Component\\Icu\\": "" }
