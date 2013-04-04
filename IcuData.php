@@ -11,6 +11,8 @@
 
 namespace Symfony\Component\Icu;
 
+use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
+
 /**
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
@@ -27,13 +29,14 @@ class IcuData
     }
 
     /**
-     * Returns whether the ICU data can be loaded.
+     * Returns whether the ICU data is stubbed.
      *
-     * @return Boolean Returns true if the ICU data can be loaded, false otherwise.
+     * @return Boolean Returns true if the ICU data is stubbed, false if it is
+     *         loaded from ICU .res files.
      */
-    public static function isLoadable()
+    public static function isStubbed()
     {
-        return class_exists('\ResourceBundle');
+        return false;
     }
 
     /**
@@ -44,6 +47,16 @@ class IcuData
     public static function getResourceDirectory()
     {
         return realpath(__DIR__ . '/Resources/data');
+    }
+
+    /**
+     * Returns a reader for reading resource bundles in this component.
+     *
+     * @return \Symfony\Component\Intl\ResourceBundle\Reader\BundleReaderInterface
+     */
+    public static function getBundleReader()
+    {
+        return new BinaryBundleReader();
     }
 
     /**
