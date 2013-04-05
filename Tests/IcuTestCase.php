@@ -28,9 +28,5 @@ abstract class IcuTestCase extends \PHPUnit_Framework_TestCase
         if (!Intl::isExtensionLoaded()) {
             $this->markTestSkipped('The intl extension is not available.');
         }
-
-        if (IcuVersion::compare(Intl::getIcuVersion(), IcuData::getVersion(), '!=', $precision = 1)) {
-            $this->markTestSkipped('Please change ICU version to ' . IcuData::getVersion());
-        }
     }
 }
