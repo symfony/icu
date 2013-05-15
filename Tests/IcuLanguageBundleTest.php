@@ -55,7 +55,7 @@ class IcuLanguageBundleTest extends IcuTestCase
             ->with($this->resDir, 'en', array('Languages'))
             ->will($this->returnValue($languages));
 
-        $this->assertSame('German', $this->bundle->getLanguageName('de', 'en'));
+        $this->assertSame('German', $this->bundle->getLanguageName('de', null, 'en'));
     }
 
     public function testGetLanguageNameWithRegion()
