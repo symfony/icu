@@ -17,11 +17,10 @@
     ],
     "require": {
         "php": ">=5.3.3",
-        "symfony/intl": ">=2.3"
+        "symfony/intl": "2.3.*@beta"
     },
     "autoload": {
         "psr-0": { "Symfony\\Component\\Icu\\": "" }
     },
-    "target-dir": "Symfony/Component/Icu",
-    "minimum-stability": "dev"
+    "target-dir": "Symfony/Component/Icu"
 }
