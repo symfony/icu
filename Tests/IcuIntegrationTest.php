@@ -29,7 +29,13 @@ class IcuIntegrationTest extends IcuTestCase
     {
         $bundle = new IcuCurrencyBundle(new StructuredBundleReader(new BinaryBundleReader()));
 
-        $this->assertSame('€', $bundle->getCurrencySymbol('EUR', 'en'));
+        $this->assertSame('€', $bundle->getCurrencySymbol('EUR'));
+        $this->assertContains('en_GB', $bundle->getLocales());
+        $this->assertContains('ro_MD', $bundle->getLocales());
+        $this->assertNotContains('root', $bundle->getLocales());
+        $this->assertNotContains('supplementalData', $bundle->getLocales());
+        $this->assertNotContains('supplementaldata', $bundle->getLocales());
+        $this->assertNotContains('misc', $bundle->getLocales());
     }
 
     public function testLanguageBundle()
@@ -37,6 +43,12 @@ class IcuIntegrationTest extends IcuTestCase
         $bundle = new IcuLanguageBundle(new StructuredBundleReader(new BinaryBundleReader()));
 
         $this->assertSame('German', $bundle->getLanguageName('de', null, 'en'));
+        $this->assertContains('en_GB', $bundle->getLocales());
+        $this->assertContains('ro_MD', $bundle->getLocales());
+        $this->assertNotContains('root', $bundle->getLocales());
+        $this->assertNotContains('supplementalData', $bundle->getLocales());
+        $this->assertNotContains('supplementaldata', $bundle->getLocales());
+        $this->assertNotContains('misc', $bundle->getLocales());
     }
 
     public function testLocaleBundle()
@@ -44,6 +56,12 @@ class IcuIntegrationTest extends IcuTestCase
         $bundle = new IcuLocaleBundle(new StructuredBundleReader(new BinaryBundleReader()));
 
         $this->assertSame('azéri', $bundle->getLocaleName('az', 'fr'));
+        $this->assertContains('en_GB', $bundle->getLocales());
+        $this->assertContains('ro_MD', $bundle->getLocales());
+        $this->assertNotContains('root', $bundle->getLocales());
+        $this->assertNotContains('supplementalData', $bundle->getLocales());
+        $this->assertNotContains('supplementaldata', $bundle->getLocales());
+        $this->assertNotContains('misc', $bundle->getLocales());
     }
 
     public function testRegionBundle()
@@ -51,5 +69,11 @@ class IcuIntegrationTest extends IcuTestCase
         $bundle = new IcuRegionBundle(new StructuredBundleReader(new BinaryBundleReader()));
 
         $this->assertSame('Vereinigtes Königreich', $bundle->getCountryName('GB', 'de'));
+        $this->assertContains('en_GB', $bundle->getLocales());
+        $this->assertContains('ro_MD', $bundle->getLocales());
+        $this->assertNotContains('root', $bundle->getLocales());
+        $this->assertNotContains('supplementalData', $bundle->getLocales());
+        $this->assertNotContains('supplementaldata', $bundle->getLocales());
+        $this->assertNotContains('misc', $bundle->getLocales());
     }
 }
