@@ -28,5 +28,7 @@ abstract class IcuTestCase extends \PHPUnit_Framework_TestCase
         if (!Intl::isExtensionLoaded()) {
             $this->markTestSkipped('The intl extension is not available.');
         }
+
+        \Locale::setDefault('en');
     }
 }
