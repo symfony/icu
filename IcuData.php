@@ -12,12 +12,17 @@
 namespace Symfony\Component\Icu;
 
 use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
+use Symfony\Component\Intl\ResourceBundle\Reader\BundleReaderInterface;
 
 /**
+ * @author Fabien Potencier <fabien@symfony.com>
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
 class IcuData
 {
+    private static $icuDataVersion;
+    private static $icuDataPath;
+
     /**
      * Returns the version of the bundled ICU data.
      *
@@ -25,7 +30,11 @@ class IcuData
      */
     public static function getVersion()
     {
-        return trim(file_get_contents(__DIR__ . '/Resources/data/version.txt'));
+        if (self::$icuDataVersion) {
+            return self::$icuDataVersion;
+        }
+
+        return self::$icuDataVersion = trim(file_get_contents(self::getResourceDirectory().'/version.txt'));
     }
 
     /**
@@ -42,17 +51,25 @@ class IcuData
     /**
      * Returns the path to the directory where the resource bundles are stored.
      *
+     * This library ships with 2 versions of the ICU data.
+     * One compatible with the < 4.4 format and the other
+     * compatible with the >= 4.4 format.
+     *
      * @return string The absolute path to the resource directory.
      */
     public static function getResourceDirectory()
     {
-        return realpath(__DIR__ . '/Resources/data');
+        if (self::$icuDataPath) {
+            return self::$icuDataPath;
+        }
+
+        return self::$icuDataPath = realpath(__DIR__.'/Resources/data/'.(self::getIntlVersion() >= 4.4 ? 'post-4.4' : 'pre-4.4'));
     }
 
     /**
      * Returns a reader for reading resource bundles in this component.
      *
-     * @return \Symfony\Component\Intl\ResourceBundle\Reader\BundleReaderInterface
+     * @return BundleReaderInterface
      */
     public static function getBundleReader()
     {
@@ -60,7 +77,34 @@ class IcuData
     }
 
     /**
+     * Returns the ICU data version from which the intl extension was compiled against.
+     *
+     * This code was extracted from composer/composer (under the MIT license.)
+     *
+     * @return The intl version
+     */
+    private static function getIntlVersion()
+    {
+        // the constant is available as of PHP 5.3.7
+        if (defined('INTL_ICU_VERSION')) {
+            return INTL_ICU_VERSION;
+        }
+
+        $reflector = new \ReflectionExtension('intl');
+
+        ob_start();
+        $reflector->info();
+        $output = ob_get_clean();
+
+        preg_match('/^ICU version => (.*)$/m', $output, $matches);
+
+        return $matches[1];
+    }
+
+    /**
      * This class must not be instantiated.
      */
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 }
